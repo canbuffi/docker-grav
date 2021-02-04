@@ -28,20 +28,6 @@ RUN \
     php7.4-xml \
     php7.4-intl && \
 
-  # set recommended PHP.ini settings
-  # see https://secure.php.net/manual/en/opcache.installation.php
-  RUN { \
-      echo 'opcache.memory_consumption=128'; \
-      echo 'opcache.interned_strings_buffer=8'; \
-      echo 'opcache.max_accelerated_files=4000'; \
-      echo 'opcache.revalidate_freq=2'; \
-      echo 'opcache.fast_shutdown=1'; \
-      echo 'opcache.enable_cli=1'; \
-      echo 'upload_max_filesize=128M'; \
-      echo 'post_max_size=128M'; \
-      echo 'expose_php=off'; \
-      } > /usr/local/etc/php/conf.d/php-recommended.ini
-
   ## Download GRAV
   mkdir -p \
     /grav && \
@@ -56,6 +42,20 @@ RUN \
   ## Nginx Logs
   ln -sf /dev/stdout /var/log/nginx/access.log && \
   ln -sf /dev/stderr /var/log/nginx/error.log
+
+  # set recommended PHP.ini settings
+  # see https://secure.php.net/manual/en/opcache.installation.php
+  RUN { \
+      echo 'opcache.memory_consumption=128'; \
+      echo 'opcache.interned_strings_buffer=8'; \
+      echo 'opcache.max_accelerated_files=4000'; \
+      echo 'opcache.revalidate_freq=2'; \
+      echo 'opcache.fast_shutdown=1'; \
+      echo 'opcache.enable_cli=1'; \
+      echo 'upload_max_filesize=128M'; \
+      echo 'post_max_size=128M'; \
+      echo 'expose_php=off'; \
+      } > /usr/local/etc/php/conf.d/php-recommended.ini
 
 EXPOSE 80 443
 
